@@ -35,6 +35,28 @@ def test_usage_is_aggregated_by_app_and_process(database):
     assert activity[0].duration_seconds == 75
 
 
+def test_usage_totals_use_friendly_names_for_legacy_process_records(database):
+    day = date(2026, 11, 12)
+    start = datetime(2026, 11, 12, 9, tzinfo=timezone.utc)
+    for app_name, process_name, seconds in (
+        ("code", "code.exe", 30),
+        ("fortniteclient-win64-shipping", "FortniteClient-Win64-Shipping.exe", 60),
+    ):
+        session_id = database.start_session(app_name, process_name, start, day)
+        database.close_session(
+            session_id,
+            start + timedelta(seconds=seconds),
+            seconds,
+        )
+
+    totals = database.get_usage_totals(day, day)
+
+    assert [(item.app_name, item.process_name) for item in totals] == [
+        ("Fortnite", "FortniteClient-Win64-Shipping.exe"),
+        ("Visual Studio Code", "code.exe"),
+    ]
+
+
 def test_recovery_closes_session_at_last_checkpoint(database):
     start = datetime(2026, 11, 12, 9, tzinfo=timezone.utc)
     session_id = database.start_session("Browser", "chrome.exe", start, start.date())

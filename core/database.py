@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ntpath
 import sqlite3
 import threading
 from contextlib import contextmanager
@@ -9,6 +10,8 @@ from dataclasses import dataclass
 from datetime import date, datetime, time as datetime_time, timedelta, timezone
 from pathlib import Path
 from typing import Iterator, Mapping
+
+from core.applications import display_name_for_process
 
 
 _SCHEMA_VERSION = 1
@@ -311,13 +314,31 @@ class Database:
                 """,
                 (start, end),
             ).fetchall()
+        totals: dict[tuple[str, str], float] = {}
+        for row in rows:
+            process_name = str(row["process_name"])
+            process_stem = ntpath.splitext(ntpath.basename(process_name))[0]
+            app_name = str(row["app_name"])
+            display_name = display_name_for_process(process_name)
+            if (
+                display_name.casefold() != process_stem.casefold()
+                and app_name.casefold()
+                in {process_stem.casefold(), display_name.casefold()}
+            ):
+                app_name = display_name
+            key = (app_name, process_name)
+            totals[key] = totals.get(key, 0.0) + float(row["duration"])
+
         return [
             UsageTotal(
-                app_name=row["app_name"],
-                process_name=row["process_name"],
-                duration_seconds=float(row["duration"]),
+                app_name=app_name,
+                process_name=process_name,
+                duration_seconds=duration,
             )
-            for row in rows
+            for (app_name, process_name), duration in sorted(
+                totals.items(),
+                key=lambda item: (-item[1], item[0][0].casefold()),
+            )
         ]
 
     def get_daily_activity(

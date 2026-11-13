@@ -96,13 +96,20 @@ class ReportScheduler:
         if not settings.auto_reports_enabled:
             return
 
-        if local_now.time().replace(tzinfo=None) >= settings.daily_report_time:
+        local_time = local_now.time().replace(tzinfo=None)
+        if local_time >= settings.daily_report_time:
+            report_day = (
+                local_now.date()
+                if settings.daily_report_time != datetime.min.time()
+                else local_now.date() - timedelta(days=1)
+            )
+        else:
             report_day = local_now.date() - timedelta(days=1)
-            self._submit("daily", report_day, report_day, settings)
+        self._submit("daily", report_day, report_day, settings)
 
         if (
             local_now.weekday() == settings.weekly_report_day
-            and local_now.time().replace(tzinfo=None) >= settings.weekly_report_time
+            and local_time >= settings.weekly_report_time
         ):
             current_week_start = local_now.date() - timedelta(
                 days=local_now.weekday()

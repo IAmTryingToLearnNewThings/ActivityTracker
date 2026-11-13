@@ -35,6 +35,23 @@ def test_ignored_processes_can_be_updated_from_settings():
     assert manager.current_process() is None
 
 
+def test_known_processes_use_friendly_names_and_keep_executable_names():
+    cases = (
+        ("code.exe", "Visual Studio Code"),
+        (
+            "FortniteClient-Win64-Shipping_EAC_EOS.exe",
+            "Fortnite",
+        ),
+    )
+    for process_name, app_name in cases:
+        manager = ProcessManager(
+            foreground_pid=lambda: 42,
+            process_name_lookup=lambda process_id: process_name,
+        )
+
+        assert manager.current_process() == ProcessIdentity(app_name, process_name)
+
+
 def test_does_not_count_activitytracker_itself():
     manager = ProcessManager(
         foreground_pid=os.getpid,

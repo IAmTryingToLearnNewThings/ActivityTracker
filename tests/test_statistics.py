@@ -58,7 +58,10 @@ def test_statistics_show_daily_weekly_and_comparison_data(database, qt_applicati
             statistics.comparison_table.item(row, 3).text()
             for row in range(statistics.comparison_table.rowCount())
         }
-        assert comparison == {"Code": "+2 min 00 s", "Firefox": "+30 s"}
+        assert comparison == {
+            "Visual Studio Code": "+2 min 00 s",
+            "Firefox": "+30 s",
+        }
         assert len(statistics.weekly_axes.patches) == 7
         assert len(statistics.comparison_axes.patches) == 4
     finally:

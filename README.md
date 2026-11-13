@@ -44,9 +44,13 @@ W sekcji **Ustawienia** można skonfigurować:
 - porę raportu dziennego oraz dzień i porę raportu tygodniowego;
 - automatyczne wysyłanie raportów.
 
-Raport dzienny podsumowuje poprzedni lokalny dzień kalendarzowy. Raport
-tygodniowy obejmuje ostatni zakończony tydzień od poniedziałku do niedzieli.
-Raport jest wysyłany po nadejściu ustawionej pory, gdy aplikacja działa.
+Raport dzienny wysłany o ustawionej porze po północy do północy obejmuje
+bieżący lokalny dzień (np. ustawienie 23:59 wysyła raport za ten sam dzień).
+Jeśli aplikacja uruchomi się po północy i przegapiła poprzednią wysyłkę,
+najpierw nadrobi raport za poprzedni dzień. Ustawienie godziny 00:00 wysyła
+raport za poprzedni, zakończony dzień. Raport tygodniowy obejmuje ostatni
+zakończony tydzień od poniedziałku do niedzieli. Raport jest wysyłany po
+nadejściu ustawionej pory, gdy aplikacja działa.
 Nieudane próby są zapisywane w historii i nie są oznaczane jako wysłane.
 
 Hasło SMTP wpisane w ustawieniach trafia do **Windows Credential Manager**
@@ -68,6 +72,9 @@ zapisuje ani nie modyfikuje ustawień poczty w bazie.
 - Log aplikacji: `%LOCALAPPDATA%\ActivityTracker\activity-tracker.log`
 - Do pomiaru używana jest nazwa procesu aktywnego okna, nie lista procesów
   działających w tle.
+- Znane procesy mają czytelne nazwy aplikacji w dashboardzie i raportach (np.
+  `code.exe` jako „Visual Studio Code” i procesy `FortniteClient-*` jako
+  „Fortnite”); oryginalna nazwa procesu nadal jest dostępna w szczegółach.
 - Czas nie jest naliczany przy zablokowanym komputerze, bezczynności,
   wstrzymanym monitorowaniu ani braku kwalifikującego się aktywnego okna.
 - Dane pozostają lokalne, z wyjątkiem raportu, który użytkownik włączy i

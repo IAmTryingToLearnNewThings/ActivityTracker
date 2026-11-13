@@ -12,6 +12,8 @@ from typing import Callable, Iterable
 
 import psutil
 
+from core.applications import display_name_for_process
+
 logger = logging.getLogger(__name__)
 
 
@@ -98,4 +100,7 @@ class ProcessManager:
             or app_name.casefold() in self._ignored_processes
         ):
             return None
-        return ProcessIdentity(app_name=app_name, process_name=process_name)
+        return ProcessIdentity(
+            app_name=display_name_for_process(process_name),
+            process_name=process_name,
+        )
