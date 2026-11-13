@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { margin: 0; padding: 24px; background: #f3f6fa; color: #172338; font-family: Arial, sans-serif; }
+    main { max-width: 760px; margin: auto; padding: 28px; background: #fff; border: 1px solid #e3e9f1; border-radius: 12px; }
+    h1 { margin: 0 0 6px; font-size: 24px; }
+    h2 { margin: 26px 0 10px; font-size: 17px; }
+    .muted { color: #718096; }
+    .metric { margin: 18px 0; padding: 16px; background: #f3f6fa; border-radius: 8px; }
+    .metric strong { display: block; margin-top: 5px; font-size: 22px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #edf1f5; text-align: left; }
+    th { color: #64748b; font-size: 12px; }
+    td:last-child, th:last-child { text-align: right; }
+    img { display: block; width: 100%; max-width: 680px; height: auto; margin: 10px auto; }
+    footer { margin-top: 24px; color: #94a3b8; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Raport tygodniowy ActivityTracker</h1>
+    <div class="muted">Zakres dat: $week_range</div>
+    <div class="metric">Aktywność w tygodniu<strong>$total_time</strong></div>
+    <p>Średnia dzienna: <strong>$daily_average</strong></p>
+    <p>Najaktywniejszy dzień: <strong>$peak_day</strong></p>
+    <h2>Aktywność według dni</h2>
+    <table>
+      <thead><tr><th>Dzień</th><th>Data</th><th>Czas</th></tr></thead>
+      <tbody>$day_rows</tbody>
+    </table>
+    <h2>Aplikacje</h2>
+    <table>
+      <thead><tr><th>Aplikacja</th><th>Czas</th><th>Udział</th></tr></thead>
+      <tbody>$app_rows</tbody>
+    </table>
+    <h2>Wykres tygodniowy</h2>
+    <img src="cid:$chart_cid" alt="Wykres aktywności tygodniowej">
+    <footer>Raport zawiera wyłącznie zagregowane nazwy procesów i czas ich użycia.</footer>
+  </main>
+</body>
+</html>
