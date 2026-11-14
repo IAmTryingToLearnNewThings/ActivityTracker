@@ -73,8 +73,9 @@ zapisuje ani nie modyfikuje ustawień poczty w bazie.
 - Do pomiaru używana jest nazwa procesu aktywnego okna, nie lista procesów
   działających w tle.
 - Znane procesy mają czytelne nazwy aplikacji w dashboardzie i raportach (np.
-  `code.exe` jako „Visual Studio Code” i procesy `FortniteClient-*` jako
-  „Fortnite”); oryginalna nazwa procesu nadal jest dostępna w szczegółach.
+  `code.exe` jako „Visual Studio Code”, `aces.exe` jako „War Thunder” i
+  procesy `FortniteClient-*` jako „Fortnite”); oryginalna nazwa procesu nadal
+  jest dostępna w szczegółach.
 - Czas nie jest naliczany przy zablokowanym komputerze, bezczynności,
   wstrzymanym monitorowaniu ani braku kwalifikującego się aktywnego okna.
 - Dane pozostają lokalne, z wyjątkiem raportu, który użytkownik włączy i

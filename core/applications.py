@@ -6,6 +6,7 @@ import ntpath
 
 _DISPLAY_NAMES = {
     "code": "Visual Studio Code",
+    "aces": "War Thunder",
 }
 
 

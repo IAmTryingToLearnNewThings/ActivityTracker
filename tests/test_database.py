@@ -41,6 +41,7 @@ def test_usage_totals_use_friendly_names_for_legacy_process_records(database):
     for app_name, process_name, seconds in (
         ("code", "code.exe", 30),
         ("fortniteclient-win64-shipping", "FortniteClient-Win64-Shipping.exe", 60),
+        ("aces", "aces.exe", 90),
     ):
         session_id = database.start_session(app_name, process_name, start, day)
         database.close_session(
@@ -52,6 +53,7 @@ def test_usage_totals_use_friendly_names_for_legacy_process_records(database):
     totals = database.get_usage_totals(day, day)
 
     assert [(item.app_name, item.process_name) for item in totals] == [
+        ("War Thunder", "aces.exe"),
         ("Fortnite", "FortniteClient-Win64-Shipping.exe"),
         ("Visual Studio Code", "code.exe"),
     ]

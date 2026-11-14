@@ -38,6 +38,7 @@ def test_ignored_processes_can_be_updated_from_settings():
 def test_known_processes_use_friendly_names_and_keep_executable_names():
     cases = (
         ("code.exe", "Visual Studio Code"),
+        ("aces.exe", "War Thunder"),
         (
             "FortniteClient-Win64-Shipping_EAC_EOS.exe",
             "Fortnite",
